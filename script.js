@@ -1,18 +1,18 @@
-class Contact {
-    constructor(task) {
-        this.task = task;
-    }
 
+let oneTask = {
+    task: 
 }
-​
+
 let contacts = [
-    new Contact(task)
-]
-​
-const contactsElement = document.getElementById('contacts')
-function appendContact(contact) {
-    const { fistName, lastName, email} = contact;
-    contactsElement.innerHTML += `<p>${fistName} ${lastName} <a href="mailto:${email}">&lt;${email}&gt;</a></p>`;
+    'Описать массив задач в JavaScript',
+    'Создать базовый макет страницы для вывода задач',
+    'Реализовать функцию добавления HTML тэгов для вывода информации о задаче'
+];
+
+let contactsElement = document.getElementById('list-tasks');
+
+function appendContact(task) {
+    contactsElement.innerHTML += `<p>${task}</p>`;
 }
-​
+
 contacts.forEach(appendContact);
