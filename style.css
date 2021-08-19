@@ -1,0 +1,14 @@
+h1{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+}
+
+body{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+#list-tasks{
+    text-align: center;
+}
