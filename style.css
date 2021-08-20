@@ -1,14 +1,85 @@
-h1{
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;700&display=swap');
 
+
+
+label{
+    font-family: 'Inconsolata', monospace;
+    font-weight: 300;
+    padding-left: 20px;
+}
+h1{
+    font-family: 'Inconsolata', monospace;
+    font-weight: 700;
+
+}
+button{
+    display: flex;
+    margin-left: 10px;
+}
 body{
-    padding-top: 5%;
     padding-bottom: 5%;
     padding-left: 20%;
     padding-right: 20%;
+    background-image: url(./images/background-1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
-#list-tasks{
-    text-align: center;
+
+.custom-checkbox{
+    margin-left: 20px;
+    display: inline;
+}
+
+.list-name{
+    color: beige;
+    padding-left: 30px;
+    border-left:2px #0000001f solid; border-right: 2px #0000001f solid; 
+
+}
+.Todo{
+    display: flex;
+    flex-direction: column;
+}
+
+#tasks{
+    padding-left: 10%;
+    padding-right: 10%;
+    min-height: 800px;
+    border-left:2px #0000001f solid; border-right: 2px #0000001f solid; 
+}
+.checkboxAndTask{
+    display: flex;
+    align-items: center;
+}
+.task{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    min-height: 50px;
+    padding: 10px;
+    color: rgb(61, 61, 61);
+    background-color: white;
+    border:1px #61646265  solid ;
+    border-radius:10px;
+    box-shadow:3px 3px 5px rgba(153, 153, 153, 0.404);
+}
+.task-base{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.task-description{
+    display: flex;
+    width: 100%;
+    margin-left: 40px;
+}
+.task-description p{
+    margin: 0;
+    font-family: 'Inconsolata', monospace;
+    font-weight: 100;
+    font-size: 10px;
 }
