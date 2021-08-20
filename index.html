@@ -7,13 +7,33 @@
     <title>ToDo</title>
 </head>
 <body>
-    <div class="list-name">
-        <h1>ToDo List</h1>
-    </div>
-    <div id="list-tasks">
-        <input type="checkbox" id="scales" name="scales" checked>
-        <label for="scales">Створення якоїсь задачки</label>
-    </div>
+   <div class="Todo">
+        <div class="list-name">
+            <h1>ToDo List</h1>
+
+        </div>
+
+        <div id="tasks">
+            <div class="task">
+                <div class="task-base">
+                    <div class="checkboxAndTask">
+                        <input type="checkbox" id="1" name="1" class="custom-checkbox">
+                        <label for="1">Створення якоїсь задачки</label>
+                    </div>   
+                    <button>x</button> 
+                </div>  
+                <div class="task-description"> 
+                    <p class="description">Деякий опис до задачі</p>
+                   <p id="date"></p>         
+                </div>   
+            </div>           
+        </div>
+            
+           
+        <!-- <div class="add-task">
+
+        </div> -->
+   </div>
 </body>
 <script src="./script.js"></script>
 </html>
