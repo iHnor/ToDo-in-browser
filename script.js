@@ -1,13 +1,14 @@
-let contacts = [
-    { title: 'Описать массив задач в JavaScript', done: true },
-    { title: 'Создать базовый макет страницы для вывода задач', done: false },
-    { title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false }
+let tasks = [
+    {id: 1, title: 'Описать массив задач в JavaScript', done: true, description: 'Add Some descript', date: '2021-11-10'},
+    {id: 2, title: 'Создать базовый макет страницы для вывода задач', done: false, description: 'Just task', date: '2021-08-20'},
+    {id: 3, title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: '2021-08-01'}
 ];
 
 let contactsElement = document.getElementById('tasks');
 
 function createTaskDiv(task) {
     let tasksList = document.createElement('div')
+    tasksList.id = task.id;
     tasksList.className = 'task'
 
     let taskBase = document.createElement('div')
@@ -29,11 +30,22 @@ function createTaskDiv(task) {
     taskBase.appendChild(checkboxAndTask);
     taskBase.appendChild(deleteButton)
 
-    let description = createDescription()
+   
+    let description = createDescription(task);
+    taskDescription.appendChild(description);   
     
-    // deleteButton.onclick = deleteTodo;
+    if(task.date !== undefined){
+        let taskDate = createDate(task);
+        taskDescription.appendChild(taskDate);
+    }
+   
     tasksList.appendChild(taskBase);
+    tasksList.appendChild(taskDescription);
+
     contactsElement.appendChild(tasksList);
+
+    deleteButton.onclick = deleteTodo;
+    checkBox.onclick = changeStatus;
 
     return tasksList;
 }
@@ -56,17 +68,47 @@ function createCheckbox(task) {
 }
 
 function createDeletebutton() {
-    let button = document.createElement('button')
-    button.innerHTML = 'x'
-    return button
+    let button = document.createElement('button');
+    button.innerHTML = 'x';
+    return button;
 }
-
-// function deleteTodo(){
-
-// }
 
 function createDescription(task){
-    // let descript = document.
+    let descript;
+    if(task.description !== undefined){
+        descript = document.createElement('p');
+        descript.innerHTML = task.description;
+    }
+    else {
+        descript = document.createElement('p');
+    }
+
+    return descript;
 }
 
-contacts.forEach(createTaskDiv); // createTaskDiv
+function createDate(task){
+    let date = document.createElement('p');
+    date.id = 'date'
+    if (new Date(task.date) < (new Date()))
+        date.style.color = 'red';
+
+    date.innerHTML = task.date;
+    return date;
+}
+
+
+function deleteTodo(){
+    let div = this.parentNode
+    let id = tasks.findIndex(task => task.id === +div.parentNode.id)
+    tasks.slice(id, 1); 
+    div.parentNode.remove();
+}
+
+function changeStatus(e){
+    let label = this.parentNode
+    
+    let task = e.target.closest(".task");
+    task.style.color = "red";
+}
+
+tasks.forEach(createTaskDiv); // createTaskDiv
