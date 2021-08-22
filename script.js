@@ -1,5 +1,5 @@
 let tasks = [
-    {id: 1, title: 'Описать массив задач в JavaScript', done: true, description: 'Add Some descript', date: '2021-11-10'},
+    {id: 1, title: 'Описать массив задач в JavaScript', done: false, description: 'Add Some descript', date: '2021-11-10'},
     {id: 2, title: 'Создать базовый макет страницы для вывода задач', done: false, description: 'Just task', date: '2021-08-20'},
     {id: 3, title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: '2021-08-01'}
 ];
@@ -8,7 +8,7 @@ let contactsElement = document.getElementById('tasks');
 
 function createTaskDiv(task) {
     let tasksList = document.createElement('div')
-    tasksList.id = task.id;
+    /* tasksList.id = task.id; */
     tasksList.className = 'task'
 
     let taskBase = document.createElement('div')
@@ -53,13 +53,13 @@ function createTaskDiv(task) {
 function createTitle(task) {
     let title = document.createElement('label');
     title.innerHTML = task.title;
-    // title.style.color = 'red';
     return title;
 }
 
 function createCheckbox(task) {
     let checkBox = document.createElement('input')
     checkBox.type = 'checkbox';
+    checkBox.id = task.id;
     checkBox.className = 'custom-checkbox';
     if (task.done)
         checkBox.checked = 'checked'
@@ -104,11 +104,18 @@ function deleteTodo(){
     div.parentNode.remove();
 }
 
-function changeStatus(e){
-    let label = this.parentNode
-    
-    let task = e.target.closest(".task");
-    task.style.color = "red";
+function changeStatus(){
+    let label = this.parentNode;
+    let checkedBox = label.firstChild;
+    let text = label.lastChild
+    if (checkedBox.checked){
+        text.style.textDecoration = 'line-through'
+        text.style.color = '#C0C0C0'
+    }
+    else {
+        label.lastChild.style.textDecoration = 'none'
+        text.style.color = 'rgb(61, 61, 61)'
+    }
 }
 
-tasks.forEach(createTaskDiv); // createTaskDiv
+tasks.forEach(createTaskDiv); 
