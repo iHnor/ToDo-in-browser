@@ -47,6 +47,7 @@ function createTaskDiv(task) {
     deleteButton.onclick = deleteTodo;
     checkBox.onclick = changeStatus;
 
+
     return tasksList;
 }
 
@@ -108,14 +109,26 @@ function changeStatus(){
     let label = this.parentNode;
     let checkedBox = label.firstChild;
     let text = label.lastChild
+    let tasksID = tasks.findIndex(task => task.id === +checkedBox.id)
+
     if (checkedBox.checked){
+        tasks[tasksID].done = checkedBox.checked;
         text.style.textDecoration = 'line-through'
         text.style.color = '#C0C0C0'
     }
     else {
+        tasks[tasksID].done = checkedBox.checked;
         label.lastChild.style.textDecoration = 'none'
         text.style.color = 'rgb(61, 61, 61)'
     }
 }
 
 tasks.forEach(createTaskDiv); 
+
+function showDone(){
+    console.log('1');
+}
+
+function hideDone(){
+    console.log('2');
+}

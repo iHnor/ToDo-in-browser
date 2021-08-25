@@ -94,3 +94,9 @@ body{
     width: 30%;
     margin-left: 40px;
 }
+.sort-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    border-left:2px #0000001f solid; border-right: 2px #0000001f solid; 
+    padding-top: 10px;
+}
