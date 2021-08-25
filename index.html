@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>ToDo</title>
 </head>
+
 <body>
-   <div class="Todo">
+    <div class="Todo">
         <div class="list-name">
             <h1>ToDo List</h1>
 
         </div>
 
         <div class="sort-buttons">
-            <button onclick="showDone()">Show done</button>
-            <button onclick="hideDone()">Hide done</button>
+            <button onclick="showDone()" id="showBtn" disabled>Show done</button>
+            <button onclick="hideDone()" id="hideBtn" !disabled>Hide done</button>
         </div>
 
         <div id="tasks">
-            <div class="task">
+            <!--  <div class="task">
                 <div class="task-base">
                     <div class="checkboxAndTask">
                         <input type="checkbox" id="0" name="1" class="custom-checkbox">
@@ -31,10 +33,11 @@
                     <p>Some description for task </p>
                    <p id="date">11-10-2021</p>         
                 </div>   
-            </div>           
+            </div>            -->
         </div>
 
-   </div>
+    </div>
 </body>
 <script src="./script.js"></script>
+
 </html>

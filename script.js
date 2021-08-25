@@ -1,14 +1,16 @@
 let tasks = [
     {id: 1, title: 'Описать массив задач в JavaScript', done: false, description: 'Add Some descript', date: '2021-11-10'},
     {id: 2, title: 'Создать базовый макет страницы для вывода задач', done: false, description: 'Just task', date: '2021-08-20'},
-    {id: 3, title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: '2021-08-01'}
+    {id: 3, title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: '2021-08-01'},
+    {id: 4, title: 'Ще якась задачка', done: false, date: '2021-08-01'}
+    
 ];
 
 let contactsElement = document.getElementById('tasks');
 
 function createTaskDiv(task) {
     let tasksList = document.createElement('div')
-    /* tasksList.id = task.id; */
+    tasksList.id = task.id;
     tasksList.className = 'task'
 
     let taskBase = document.createElement('div')
@@ -53,6 +55,10 @@ function createTaskDiv(task) {
 
 function createTitle(task) {
     let title = document.createElement('label');
+    if (task.done === true){
+        title.style.textDecoration = 'line-through'
+        title.style.color = '#C0C0C0'
+    }
     title.innerHTML = task.title;
     return title;
 }
@@ -100,8 +106,9 @@ function createDate(task){
 
 function deleteTodo(){
     let div = this.parentNode
-    let id = tasks.findIndex(task => task.id === +div.parentNode.id)
-    tasks.slice(id, 1); 
+    let idList = tasks.findIndex(task => task.id === +div.parentNode.id)
+    tasks.splice(idList, 1); 
+    console.log(idList);
     div.parentNode.remove();
 }
 
@@ -110,25 +117,57 @@ function changeStatus(){
     let checkedBox = label.firstChild;
     let text = label.lastChild
     let tasksID = tasks.findIndex(task => task.id === +checkedBox.id)
+    let hide = document.getElementById("hideBtn"); 
 
     if (checkedBox.checked){
         tasks[tasksID].done = checkedBox.checked;
         text.style.textDecoration = 'line-through'
         text.style.color = '#C0C0C0'
+        if(hide.disabled){
+            document.getElementById(`${tasks[tasksID].id}`).remove()
+        }
     }
     else {
         tasks[tasksID].done = checkedBox.checked;
         label.lastChild.style.textDecoration = 'none'
         text.style.color = 'rgb(61, 61, 61)'
     }
+
 }
 
 tasks.forEach(createTaskDiv); 
 
 function showDone(){
-    console.log('1');
+    removeTasks();
+    tasks.forEach(createTaskDiv); 
+    buttonStatus();
 }
 
 function hideDone(){
-    console.log('2');
+    removeTasks();
+
+    let sortElem = [];
+    tasks.forEach((element) => {
+        if (element.done === false){
+            sortElem.push(element)
+        }
+    })
+
+    sortElem.forEach(createTaskDiv);
+    buttonStatus();
+}
+
+function removeTasks(){
+    let div = document.querySelectorAll('.task');
+    div.forEach((elem) => {
+        elem.remove()
+    })
+}
+
+function buttonStatus(){
+    let show = document.getElementById("showBtn");
+    let hide = document.getElementById("hideBtn"); 
+    show.disabled = !show.disabled;
+    hide.disabled = !hide.disabled;
+    
 }
