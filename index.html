@@ -20,6 +20,13 @@
             <button onclick="hideDone()" id="hideBtn" !disabled>Hide done</button>
         </div>
 
+        <form name="addTask">
+            <input type="text" name="title" placeholder="Task">
+            <input type="text" name="description" placeholder="Description">
+            <input type="date" name="date" placeholder="Deadline">
+            <button type="submit">Add</button>
+        </form>
+
         <div id="tasks">
             <!--  <div class="task">
                 <div class="task-base">
@@ -35,12 +42,7 @@
                 </div>   
             </div>            -->
         </div>
-        <div class="addTask">
-            <input type="text" name="title" placeholder="Task">
-            <input type="text" name="description" placeholder="Description">
-            <input type="text" name="date" placeholder="Deadline">
-            <button type="submit">Add</button>
-        </div>
+        
     </div>
 </body>
 <script src="./script.js"></script>

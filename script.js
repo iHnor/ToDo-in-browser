@@ -1,10 +1,13 @@
-let tasks = [
-    {id: 1, title: 'Описать массив задач в JavaScript', done: false, description: 'Add Some descript', date: '2021-11-10'},
-    {id: 2, title: 'Создать базовый макет страницы для вывода задач', done: false, description: 'Just task', date: '2021-08-20'},
-    {id: 3, title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: '2021-08-01'},
-    {id: 4, title: 'Ще якась задачка', done: false, date: '2021-08-01'}
+const inc = (index = 0) => () => ++index
+const genId = inc()
+
+// let tasks = [
+//     {id: genId(), title: 'Описать массив задач в JavaScript', done: false, description: 'Add Some descript', date: new Date('2021-11-10')},
+//     {id: genId(), title: 'Создать базовый макет страницы для вывода задач', done: false, description: 'Just task', date: new Date('2021-08-20')},
+//     {id: genId(), title: 'Реализовать функцию добавления HTML тэгов для вывода информации о задаче', done: false, date: new Date('2021-08-01')},
+//     {id: genId(), title: 'Ще якась задачка', done: false, date: new Date('2021-08-01')}
     
-];
+// ];
 
 let contactsElement = document.getElementById('tasks');
 
@@ -96,31 +99,36 @@ function createDescription(task){
 function createDate(task){
     let date = document.createElement('p');
     date.id = 'date'
-    if (new Date(task.date) < (new Date()))
+    if (task.date < (new Date()))
         date.style.color = 'red';
-
-    date.innerHTML = task.date;
+    if(typeof(task.date) !== '')
+        task.date = new Date(task.date)
+    date.innerHTML = task.date.toLocaleDateString('uk');
     return date;
 }
 
 
 function deleteTodo(){
     let div = this.parentNode
-    let idList = tasks.findIndex(task => task.id === +div.parentNode.id)
-    tasks.splice(idList, 1); 
-    console.log(idList);
+
+    fetch(tasksEnpoint+'/'+div.parentNode.id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+    })
+
     div.parentNode.remove();
 }
 
 function changeStatus(){
     let label = this.parentNode;
     let checkedBox = label.firstChild;
-    let text = label.lastChild
-    let tasksID = tasks.findIndex(task => task.id === +checkedBox.id)
+    let text = label.lastChild;
     let hide = document.getElementById("hideBtn"); 
 
     if (checkedBox.checked){
-        tasks[tasksID].done = checkedBox.checked;
         text.style.textDecoration = 'line-through'
         text.style.color = '#C0C0C0'
         if(hide.disabled){
@@ -128,32 +136,40 @@ function changeStatus(){
         }
     }
     else {
-        tasks[tasksID].done = checkedBox.checked;
         label.lastChild.style.textDecoration = 'none'
         text.style.color = 'rgb(61, 61, 61)'
     }
 
+    fetch(tasksEnpoint+'/'+checkedBox.id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({done: checkedBox.checked})
+    })
 }
-
-tasks.forEach(createTaskDiv); 
 
 function showDone(){
     removeTasks();
-    tasks.forEach(createTaskDiv); 
+
+    fetch(tasksEnpoint) 
+        .then(response => response.json())
+        .then(tasks => tasks.forEach(createTaskDiv));
+
     buttonStatus();
 }
 
 function hideDone(){
     removeTasks();
+    
+    fetch(tasksEnpoint) 
+        .then(response => response.json())
+        .then(tasks => tasks.forEach((element) => {
+            if (element.done === false){
+                createTaskDiv(element)
+            }
+        }));
 
-    let sortElem = [];
-    tasks.forEach((element) => {
-        if (element.done === false){
-            sortElem.push(element)
-        }
-    })
-
-    sortElem.forEach(createTaskDiv);
     buttonStatus();
 }
 
@@ -171,3 +187,39 @@ function buttonStatus(){
     hide.disabled = !hide.disabled;
     
 }
+
+const addTaskForm =  document.forms['addTask'];
+
+function createContact(formData){
+    let contact = Object.fromEntries(formData.entries())
+    let newTask = {id: genId(), title: contact.title, done: false, description: contact.description, date: new Date(contact.date)};
+    return newTask;
+}
+ 
+const tasksEnpoint = 'http://localhost:3000/tasks'
+
+addTaskForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(addTaskForm);
+    const contact = createContact(formData);
+
+    postTask(contact)
+        .then(response => response.json())
+        .then(createTaskDiv)
+    
+    addTaskForm.reset();
+});
+
+function postTask(contact) {
+    return fetch(tasksEnpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contact)
+    })
+}
+
+fetch(tasksEnpoint) 
+    .then(response => response.json())
+    .then(tasks => tasks.forEach(createTaskDiv));

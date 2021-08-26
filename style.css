@@ -100,7 +100,10 @@ body{
     border-left:2px #0000001f solid; border-right: 2px #0000001f solid; 
     padding-top: 10px;
 }
-.addTask{
+form{
     display: flex;
     justify-content: space-evenly;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-left:2px #0000001f solid; border-right: 2px #0000001f solid; 
 }
